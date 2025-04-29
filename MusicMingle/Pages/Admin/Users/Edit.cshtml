@@ -1,0 +1,65 @@
+@page "{id}"
+@model MusicMingle.Pages.Admin.Users.EditModel
+@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Edit User Roles";
+}
+
+<h1 class="text-2xl font-bold mb-6 text-gray-800">Edit Roles for @Model.AppUser?.UserName</h1>
+
+<div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+    <form method="post" class="space-y-6">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 mb-4"></div>
+        <input type="hidden" asp-for="AppUser.Id" />
+
+        <div>
+            <h4 class="text-lg font-semibold mb-2 text-gray-700">Current Roles</h4>
+            @if (Model.UserRoles.Any())
+            {
+                <ul class="list-disc list-inside text-gray-600">
+                    @foreach (var role in Model.UserRoles)
+                    {
+                        <li>@role</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-gray-500">User has no roles.</p>
+            }
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Assign Roles</label>
+            <div class="space-y-2">
+                @foreach (var role in Model.AllRoles)
+                {
+                    <div class="flex items-center">
+                        <input type="checkbox"
+                               name="SelectedRoles"
+                               value="@role.Name"
+                        @(Model.UserRoles.Contains(role.Name) ? "checked" : "")
+                               class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" />
+                        <label class="ml-2 block text-sm text-gray-700">@role.Name</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <input type="submit" value="Save Changes"
+                   class="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md text-sm font-semibold transition" />
+            <a asp-page="./Index"
+               class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-md text-sm font-semibold transition">
+                Back to List
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,50 @@
+@page
+@model MusicMingle.Pages.Admin.Categories.IndexModel
+
+@{
+    ViewData["Title"] = "Manage Categories";
+}
+
+<h1 class="text-3xl font-bold text-gray-900 mb-6">Manage Categories</h1>
+
+<div class="mb-4">
+    <a asp-page="Create"
+       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 focus:outline-none">
+        + Create New Category
+    </a>
+</div>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-700 bg-white">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100 border-b">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(model => model.Categories[0].Name)
+                </th>
+                <th scope="col" class="px-6 py-3 text-right">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Categories)
+            {
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-6 py-4">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="px-6 py-4 text-right space-x-2">
+                        <a asp-page="./Edit" asp-route-id="@item.Id"
+                           class="font-medium text-blue-600 hover:underline">
+                            Edit
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id"
+                           class="font-medium text-red-600 hover:underline">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

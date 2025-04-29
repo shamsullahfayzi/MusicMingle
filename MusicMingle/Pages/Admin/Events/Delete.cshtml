@@ -1,0 +1,60 @@
+@page "{id:int}"
+@model MusicMingle.Pages.Admin.Events.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Event";
+}
+
+<h1 class="text-2xl font-bold mb-6 text-gray-800">Delete Event</h1>
+
+<div class="bg-white p-8 shadow-lg rounded-lg max-w-3xl mx-auto space-y-6">
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded">
+        <p class="text-red-800 font-semibold">Are you sure you want to delete this event?</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6">
+        <div>
+            <p class="text-gray-600 text-sm">Title</p>
+            <p class="font-semibold text-gray-800">@Model.Event.Title</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">Category</p>
+            <p class="font-semibold text-gray-800">@Model.Event.Category?.Name</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">Start Date & Time</p>
+            <p class="font-semibold text-gray-800">@Model.Event.StartDateTime.ToString("f")</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">Price</p>
+            <p class="font-semibold text-gray-800">@Model.Event.Price.ToString("C")</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm mb-2">Thumbnail</p>
+            @if (!string.IsNullOrEmpty(Model.Event.ThumbnailImagePath))
+            {
+                <img src="@Model.Event.ThumbnailImagePath" alt="Thumbnail Image" class="rounded border w-32 h-32 object-cover" />
+            }
+            else
+            {
+                <p class="text-gray-500 italic">No thumbnail</p>
+            }
+        </div>
+    </div>
+
+    <form method="post" class="pt-6 flex space-x-4">
+        <input type="hidden" asp-for="Event.Id" />
+
+        <button type="submit" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-semibold transition">
+            Confirm Delete
+        </button>
+
+        <a asp-page="./Index" class="px-5 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-md text-sm font-semibold transition">
+            Cancel
+        </a>
+    </form>
+</div>

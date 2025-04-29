@@ -1,0 +1,29 @@
+@page "{id}"
+@model MusicMingle.Pages.Admin.Users.DeleteModel
+
+@{ ViewData["Title"] = "Delete User"; }
+
+<h1 class="text-2xl font-semibold mb-4">Delete User</h1>
+
+<h3 class="text-lg text-red-600 mb-4">Are you sure you want to delete this user?</h3>
+<div>
+    <h4 class="text-xl font-medium mb-2">User Details</h4>
+    <hr class="mb-4"/>
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="col-span-1">
+            <dt class="font-semibold text-gray-600">@Html.DisplayNameFor(model => model.AppUser.UserName)</dt>
+            <dd class="mt-1 text-gray-900">@Html.DisplayFor(model => model.AppUser.UserName)</dd>
+        </div>
+        <div class="col-span-1">
+            <dt class="font-semibold text-gray-600">@Html.DisplayNameFor(model => model.AppUser.Email)</dt>
+            <dd class="mt-1 text-gray-900">@Html.DisplayFor(model => model.AppUser.Email)</dd>
+        </div>
+        @* Add other user details you want to display before deletion *@
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="AppUser.Id" />
+        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">Delete</button>
+        <a asp-page="./Index" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Back to List</a>
+    </form>
+</div>

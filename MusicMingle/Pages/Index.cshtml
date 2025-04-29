@@ -1,0 +1,295 @@
+﻿@page
+@model MusicMingle.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!-- Hero Section with Animated Background -->
+<section class="relative bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 text-white overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-0 left-1/2 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div class="relative container mx-auto px-4 py-32 text-center">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
+            <span class="block">Feel the</span>
+            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300">Music Vibe</span>
+        </h1>
+        <p class="text-xl md:text-2xl font-light mb-10 max-w-3xl mx-auto">
+            Discover, book, and experience unforgettable music events in your city.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a asp-page="/Events/Index" class="relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-bold text-purple-900 rounded-full group bg-gradient-to-r from-white to-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <span class="relative">Browse Events</span>
+                <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+            <a href="#featured" class="relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-bold text-white border-2 border-white rounded-full group hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <span class="relative">Featured Shows</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Floating music notes animation -->
+    <div class="absolute bottom-0 left-0 right-0 h-20 overflow-hidden">
+        <div class="music-note absolute text-purple-300 opacity-70" style="left: 5%; bottom: 10%; animation: floatNote 8s linear infinite;">♪</div>
+        <div class="music-note absolute text-pink-300 opacity-70" style="left: 15%; bottom: 30%; animation: floatNote 10s linear infinite 2s;">♫</div>
+        <div class="music-note absolute text-blue-300 opacity-70" style="left: 25%; bottom: 20%; animation: floatNote 12s linear infinite 1s;">♩</div>
+        <div class="music-note absolute text-white opacity-70" style="left: 35%; bottom: 40%; animation: floatNote 9s linear infinite 3s;">♪</div>
+        <div class="music-note absolute text-purple-200 opacity-70" style="left: 45%; bottom: 15%; animation: floatNote 11s linear infinite;">♫</div>
+        <div class="music-note absolute text-pink-200 opacity-70" style="left: 55%; bottom: 35%; animation: floatNote 8s linear infinite 2s;">♩</div>
+        <div class="music-note absolute text-blue-200 opacity-70" style="left: 65%; bottom: 25%; animation: floatNote 10s linear infinite 1s;">♪</div>
+        <div class="music-note absolute text-white opacity-70" style="left: 75%; bottom: 45%; animation: floatNote 12s linear infinite 3s;">♫</div>
+        <div class="music-note absolute text-purple-300 opacity-70" style="left: 85%; bottom: 20%; animation: floatNote 9s linear infinite;">♩</div>
+        <div class="music-note absolute text-pink-300 opacity-70" style="left: 95%; bottom: 30%; animation: floatNote 11s linear infinite 2s;">♪</div>
+    </div>
+</section>
+
+<!-- Featured Events Section -->
+<section id="featured" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-semibold text-purple-700 bg-purple-100 rounded-full mb-4">Upcoming Events</span>
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Featured Shows</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Discover the hottest music events happening near you</p>
+        </div>
+
+        @if (Model.FeaturedEvents != null && Model.FeaturedEvents.Any())
+        {
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach (var evnt in Model.FeaturedEvents)
+                {
+                    <div class="group relative bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+                        <div class="relative overflow-hidden h-60">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                 src="@(!string.IsNullOrEmpty(evnt.ThumbnailImagePath) ? Url.Content(evnt.ThumbnailImagePath) : "/images/placeholder-event.png")"
+                                 alt="Event Image" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute top-4 right-4">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-600 text-white">
+                                    @evnt.Category.Name
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                @evnt.StartDateTime.ToString("MMMM dd, yyyy")
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">@evnt.Title</h3>
+                            <p class="text-gray-600 mb-4 line-clamp-2">@evnt.Description</p>
+                            <div class="flex items-center text-sm text-gray-500 mb-4">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                @evnt.Location
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold text-purple-600">$@(evnt.Price.ToString("N2") ?? "Free")</span>
+                                <a asp-page="/Events/Details" asp-route-id="@evnt.Id" class="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all">
+                                    Get Tickets
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="text-center mt-12">
+                <a asp-page="/Events/Index" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105">
+                    View All Events
+                    <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-12">
+                <div class="mx-auto h-24 w-24 text-purple-400 mb-6">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-medium text-gray-900 mb-2">No upcoming events right now</h3>
+                <p class="text-gray-600 max-w-md mx-auto mb-6">Check back soon for the latest music events and concerts in your area!</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-8">
+                    <div class="aspect-w-1 aspect-h-1">
+                        <div class="w-full h-full bg-gradient-to-br from-purple-100 to-blue-100 rounded-lg overflow-hidden relative">
+                            <div class="absolute inset-0 flex items-center justify-center text-purple-400 opacity-70">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aspect-w-1 aspect-h-1">
+                        <div class="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 rounded-lg overflow-hidden relative">
+                            <div class="absolute inset-0 flex items-center justify-center text-pink-400 opacity-70">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aspect-w-1 aspect-h-1">
+                        <div class="w-full h-full bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg overflow-hidden relative">
+                            <div class="absolute inset-0 flex items-center justify-center text-blue-400 opacity-70">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aspect-w-1 aspect-h-1">
+                        <div class="w-full h-full bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg overflow-hidden relative">
+                            <div class="absolute inset-0 flex items-center justify-center text-indigo-400 opacity-70">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-semibold text-pink-700 bg-pink-100 rounded-full mb-4">Easy Steps</span>
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">How MusicMingle Works</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Get your tickets in just a few simple steps</p>
+        </div>
+
+        <div class="relative">
+            <!-- Timeline -->
+            <div class="hidden md:block absolute top-0 left-1/2 h-full w-1 bg-gradient-to-b from-purple-200 via-pink-200 to-blue-200 transform -translate-x-1/2"></div>
+
+            <!-- Steps -->
+            <div class="relative space-y-12 md:space-y-0 md:grid md:grid-cols-3 md:gap-8">
+                <!-- Step 1 -->
+                <div class="md:text-right text-center">
+                    <div class="flex items-center justify-center md:justify-end mb-4">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 text-purple-700 border-4 border-white shadow-lg">
+                            <span class="text-2xl font-bold">1</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Discover Events</h3>
+                    <p class="text-gray-600">Browse our curated selection of concerts, festivals, and live performances</p>
+                </div>
+
+                <!-- Step 2 (center) -->
+                <div class="md:text-center text-center">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-pink-100 text-pink-700 border-4 border-white shadow-lg">
+                            <span class="text-2xl font-bold">2</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Book Tickets</h3>
+                    <p class="text-gray-600">Secure your spot with our easy and secure checkout process</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="md:text-left text-center">
+                    <div class="flex items-center justify-center md:justify-start mb-4">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-blue-700 border-4 border-white shadow-lg">
+                            <span class="text-2xl font-bold">3</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Enjoy the Show</h3>
+                    <p class="text-gray-600">Experience unforgettable live music moments</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-semibold text-blue-700 bg-blue-100 rounded-full mb-4">Testimonials</span>
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">What Music Lovers Say</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Don't just take our word for it</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="flex -space-x-2">
+                        <img class="w-12 h-12 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Alex P.">
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold text-gray-900">Alex P.</h4>
+                        <div class="flex items-center mt-1">
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 italic">"MusicMingle made finding and booking tickets so easy! Found an amazing concert I wouldn't have known about otherwise. The whole experience was seamless."</p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="flex -space-x-2">
+                        <img class="w-12 h-12 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James L.">
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold text-gray-900">James L.</h4>
+                        <div class="flex items-center mt-1">
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 italic">"I've used many ticket platforms, but MusicMingle stands out with its clean interface and excellent customer service. Got last-minute tickets to my favorite band!"</p>
+            </div>
+        </div>
+     </div>
+</section>

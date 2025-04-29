@@ -1,0 +1,73 @@
+@page "{id:int}"
+@model MusicMingle.Pages.Admin.Events.DetailsModel
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<h1 class="text-2xl font-bold mb-6 text-gray-800">Event Details</h1>
+
+<div class="bg-white p-8 shadow-lg rounded-lg max-w-4xl mx-auto space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <p class="text-gray-600 text-sm">Title</p>
+            <p class="font-semibold text-gray-800">@Model.Event.Title</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">Location</p>
+            <p class="font-semibold text-gray-800">@Model.Event.Location</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">Start Date & Time</p>
+            <p class="font-semibold text-gray-800">@Model.Event.StartDateTime.ToString("f")</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">End Date & Time</p>
+            <p class="font-semibold text-gray-800">@Model.Event.EndDateTime.ToString("f")</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">Max Attendees</p>
+            <p class="font-semibold text-gray-800">@Model.Event.MaxAttendees</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">Price</p>
+            <p class="font-semibold text-gray-800">@Model.Event.Price.ToString("C")</p>
+        </div>
+
+        <div>
+            <p class="text-gray-600 text-sm">Category</p>
+            <p class="font-semibold text-gray-800">@Model.Event.Category?.Name</p>
+        </div>
+    </div>
+
+    <div>
+        <p class="text-gray-600 text-sm">Description</p>
+        <p class="font-medium text-gray-800 mt-2">@Model.Event.Description</p>
+    </div>
+
+    <div>
+        <p class="text-gray-600 text-sm mb-2">Thumbnail</p>
+        @if (!string.IsNullOrEmpty(Model.Event.ThumbnailImagePath))
+        {
+            <img src="@Model.Event.ThumbnailImagePath" alt="Thumbnail Image" class="rounded-lg border w-full max-w-xs" />
+        }
+        else
+        {
+            <p class="text-gray-500 italic">No thumbnail available</p>
+        }
+    </div>
+
+    <div class="flex space-x-4 pt-4">
+        <a asp-page="Edit" asp-route-id="@Model.Event.Id" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md text-sm font-semibold transition">
+            Edit
+        </a>
+        <a asp-page="Index" class="px-5 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-md text-sm font-semibold transition">
+            Back to List
+        </a>
+    </div>
+</div>

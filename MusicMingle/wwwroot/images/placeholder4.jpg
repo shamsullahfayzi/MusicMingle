@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" style="background-color:#3b82f6;">
+  <defs>
+    <pattern id="pattern-circles" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="10" fill="rgba(255,255,255,0.1)"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#pattern-circles)"/>
+  <rect width="100%" height="100%" fill="rgba(59, 130, 246, 0.8)"/> <!-- Slightly transparent overlay -->
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="35" fill="#ffffff" font-weight="bold">
+    Chill Beats
+  </text>
+  <line x1="50" y1="550" x2="750" y2="550" stroke="#ffffff" stroke-width="5"/>
+  <line x1="50" y1="50" x2="750" y2="50" stroke="#ffffff" stroke-width="5"/>
+</svg>

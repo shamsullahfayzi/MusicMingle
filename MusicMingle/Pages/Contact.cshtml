@@ -1,0 +1,51 @@
+@page
+@model MusicMingle.Pages.ContactModel
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">@ViewData["Title"]</h1>
+
+    @if (Model.MessageSent)
+    {
+        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+            <span class="font-medium">Success!</span> Your message has been sent successfully. We'll get back to you soon.
+        </div>
+    }
+    else
+    {
+        <form method="post" class="max-w-lg mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+            <div asp-validation-summary="ModelOnly" class="text-red-600 dark:text-red-400 mb-4"></div>
+
+            <div class="mb-5">
+                <label asp-for="ContactMessage.Name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Name</label>
+                <input asp-for="ContactMessage.Name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" required />
+                <span asp-validation-for="ContactMessage.Name" class="text-red-600 dark:text-red-400 text-sm mt-1"></span>
+            </div>
+
+            <div class="mb-5">
+                <label asp-for="ContactMessage.Email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
+                <input asp-for="ContactMessage.Email" type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@example.com" required />
+                <span asp-validation-for="ContactMessage.Email" class="text-red-600 dark:text-red-400 text-sm mt-1"></span>
+            </div>
+            <div class="mb-5">
+                <label asp-for="ContactMessage.Subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
+                <input asp-for="ContactMessage.Subject" type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@example.com" required />
+                <span asp-validation-for="ContactMessage.Subject" class="text-red-600 dark:text-red-400 text-sm mt-1"></span>
+            </div>
+
+            <div class="mb-5">
+                <label asp-for="ContactMessage.Message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Message</label>
+                <textarea asp-for="ContactMessage.Message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your message here..." required></textarea>
+                <span asp-validation-for="ContactMessage.Message" class="text-red-600 dark:text-red-400 text-sm mt-1"></span>
+            </div>
+
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Send Message</button>
+        </form>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
